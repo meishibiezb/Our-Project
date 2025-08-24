@@ -8,6 +8,10 @@ public interface IPawn
     {
         return;
     }
+    void Clmaber(float direction)
+    {
+        return;
+    }
     void Move(float direction)
     {
         return;
@@ -21,6 +25,10 @@ public interface IPawn
         return;
     }
     bool IsOnTheWall()
+    {
+        return false;
+    }
+    bool IsClambering()
     {
         return false;
     }

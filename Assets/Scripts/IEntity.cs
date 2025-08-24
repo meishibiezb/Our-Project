@@ -8,9 +8,17 @@ public interface IEntity
     {
         return 0;
     }
+    void SetHealth(int health)
+    {
+        return;
+    }
     int GetMaxHealth()
     {
         return 0;
+    }
+    void SetMaxHealth(int maxHealth)
+    {
+        return;
     }
     void Damaged(int damage)
     {
@@ -37,16 +45,24 @@ public interface IEntity
     {
         return null;
     }
+    GameObject[] GetEffects()
+    {
+        return null;
+    }
     void AddAbility(GameObject ability)
     {
         return;
     }
-    GameObject GetWallAttached()
-    {
-        return null;
-    }
     bool IsCreature()
     {
         return false;
+    }
+    bool GetCertainStatus(string status)
+    {
+        return false;
+    }
+    void SetCertainStatus(string status, bool value)
+    {
+        return;
     }
 }

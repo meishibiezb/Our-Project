@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
     [SerializeField] GameObject[] abilities; // 技能对象
+    [SerializeField] GameObject[] effectAppliedOnAbsorb; // 吸收时应用的效果
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -39,7 +40,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     // 碰撞
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
             var player = collision.gameObject.GetComponent<IEntity>();
             if ((player != null) && GetComponent<IEntity>().IsDead())
@@ -108,5 +109,9 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     public bool IsCreature()
     {
         return true;
+    }
+    public GameObject[] GetEffects()
+    {
+        return effectAppliedOnAbsorb;
     }
 }

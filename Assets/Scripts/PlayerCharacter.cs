@@ -1,18 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
 {
     Rigidbody2D rb;
-    Animator anim;
     int health;
     bool isGrounded;
     bool isTowardsLeft;
     GameObject triggeringObject;
+    bool isClambering;
     public GameObject wall;
+    public bool isAbsorbing; // 是否处于吸收状态
     List<GameObject> abilityInstances;
+    [SerializeField] Vector2 sizeClamp = new Vector2(0.8f, 3f); // 角色缩放范围
     [SerializeField] float jumpForce = 300f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
@@ -27,7 +30,6 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<Animator>();
         health = maxHealth;
         tag = "Player";
         // 实例化技能
@@ -40,6 +42,29 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             }
         }
         isTowardsLeft = false;
+        isClambering = false;
+        isAbsorbing = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // 设置物理效果
+        isClambering = IsOnTheWall() && rb.velocity.y > 0;
+        if (isGrounded || isClambering)
+        {
+            rb.rotation = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints2D.None;
+        }
+
+        // 根据生命值缩放
+        float healthRatio = 1f + ((float)(health - 100) / 200f);
+        healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
+        transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
     }
 
     //碰撞
@@ -60,15 +85,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
 
             }
         }
-        
+
         // 处理与其他物体的碰撞逻辑
+        if (collision.gameObject.GetComponent<IProjectile>() != null && CompareTag(collision.gameObject.tag))
+        {
+            return; // 不踩自己的子弹
+        }
         var contactPoints = new ContactPoint2D[collision.contactCount];
         collision.GetContacts(contactPoints);
         foreach (var contact in contactPoints)
         {
-            if (contact.normal.x < 0.2f)
+            if (Mathf.Abs(contact.normal.x) < 0.5f)
             {
+                rb.rotation = 0f;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 isGrounded = true;
+                break;
             }
         }
     }
@@ -96,13 +128,6 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //isGrounded = Mathf.Abs(rb.velocity.y) < 0.01f;
-    }
-
-
     //内部逻辑
     private void Die()
     {
@@ -112,18 +137,12 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         GetComponent<SpriteRenderer>().enabled = false; // 隐藏角色
         Destroy(gameObject);
     }
-    private void Clamber()
-    {
-        rb.velocity = new Vector2(0f, moveSpeed * 0.45f);
-    }
 
     //实现接口IPawn
     public void Jump()
     {
-        if (rb != null && IsOnTheWall())
+        if (rb != null && IsOnTheWall() && !isGrounded)
         {
-            Clamber();
-
             return;// 贴墙时不进行正常跳跃
         }
         //跳跃（不贴墙）
@@ -133,13 +152,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             isGrounded = false;
         }
     }
+    public void Clmaber(float direction)
+    {
+        if (direction > 0 && wall != null)
+        {
+            rb.velocity = new Vector2(0f, moveSpeed * 0.45f);
+            isGrounded= false;
+        }
+    }
     public void Move(float direction)
     {
         Vector2 moveDirection = new Vector2(direction, 0);
-        // 贴墙
-        if (rb != null && IsOnTheWall())
+        // 贴墙并且朝向墙壁时，进行贴墙移动
+        if (rb != null && IsOnTheWall() && (wall.transform.position.x - rb.position.x) * direction > 0 && !isClambering)
         {
-            rb.AddForce(moveDirection * 10f);
+            rb.velocity *= new Vector2(0.1f, 0.5f);
+            //Debug.Log($"direction:{direction},wall.transform.position.x - rb.position.x:{wall.transform.position.x - rb.position.x}");
 
             return;// 贴墙时不进行正常移动
         }
@@ -153,6 +181,13 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         {
             isTowardsLeft = false;
         }
+        if (rb.constraints == RigidbodyConstraints2D.None)
+        {
+            if (math.abs(rb.angularVelocity) <= 360f)
+            {
+                rb.AddTorque(-direction * 180f);
+            }
+        }
     }
     public bool IsGrounded()
     {
@@ -162,12 +197,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     {
         if (abilityInstances != null && abilityIndex >= 0 && abilityIndex < abilityInstances.Count)
         {
-            abilityInstances[abilityIndex].GetComponent<IAbility>()?.Activate(GetComponent<IEntity>());
+            var abilityInstance = abilityInstances[abilityIndex].GetComponent<IAbility>();
+            if (abilityInstance == null)
+            {
+                return;
+            }
+            abilityInstance?.EffectBeforeExecute()?.ApplyEffect(GetComponent<IEntity>());
+            abilityInstance?.Activate(GetComponent<IEntity>());
         }
     }
     public bool IsOnTheWall()
     {
         return wall != null;
+    }
+    public bool IsClambering()
+    {
+        return isClambering;
     }
 
     // 实现接口IEntity
@@ -175,9 +220,28 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     {
         return health;
     }
+    public void SetHealth(int health)
+    {
+        if (this.health > maxHealth)
+        {
+            this.health = maxHealth;
+                }
+        else
+        {
+            this.health = health;
+        }
+    }
     public int GetMaxHealth()
     {
         return maxHealth;
+    }
+    public void SetMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
     }
     public string GetName()
     {
@@ -218,5 +282,40 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     public bool IsCreature()
     {
         return true;
+    }
+    public bool GetCertainStatus(string status)
+    {
+        if (status == "isAbsorbing")
+        {
+            return isAbsorbing;
+        }
+        if (status == "isClambering")
+        {
+            return isClambering;
+        }
+        if (status == "isGrounded")
+        {
+            return isGrounded;
+        }
+        return false;
+    }
+    public void SetCertainStatus(string status, bool value)
+    {
+        if (status == "isAbsorbing")
+        {
+            isAbsorbing = value;
+            return;
+        }
+        if (status == "isClambering")
+        {
+            isClambering = value;
+            return;
+        }
+        if (status == "isGrounded")
+        {
+            isGrounded = value;
+            return;
+        }
+        return;
     }
 }
