@@ -5,11 +5,12 @@ using UnityEngine;
 public class Shoot : MonoBehaviour, IAbility
 {
     string AbilityName = "Shoot";
+    float cooldownTimer = 0f;
     [SerializeField] GameObject bullet;
     [SerializeField] Vector3 bias;
     [SerializeField] Vector2 shootForce;
     [SerializeField] float cooldownThreshold;
-    float cooldownTimer = 0f;
+    [SerializeField] float damageFactor = 0.03f; // 伤害随着生命提升的因数
     // Start is called before the first frame update
     void Start()
     {
@@ -51,6 +52,11 @@ public class Shoot : MonoBehaviour, IAbility
         projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(isLeft ? -shootForce.x : shootForce.x, shootForce.y));
         projectile.GetComponent<IProjectile>()?.SetCreator(speller);
         projectile.tag = speller.GetGameObject().tag;
+        if (speller.GetGameObject().tag == "Player")
+        {
+            float factor = 1f + (speller.GetHealth() - 100) * damageFactor;
+            projectile.GetComponent<IProjectile>()?.SetDamage((int)(projectile.GetComponent<IProjectile>()?.GetDamage() * factor));
+        }
     }
     public string GetAbilityName()
     {
