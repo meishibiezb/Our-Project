@@ -10,7 +10,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     int health;
     bool isGrounded;
     bool isTowardsLeft;
-    GameObject triggeringObject;
+    public GameObject triggeringObject;
     bool isClambering;
     GameObject wall;
     bool isAbsorbing; // 是否处于吸收状态
@@ -123,7 +123,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     // 触发
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag(tag))
+        if (!collision.gameObject.CompareTag(tag) && collision.isTrigger)
+        {
+            triggeringObject = collision.gameObject;
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!collision.gameObject.CompareTag(tag) && collision.isTrigger)
         {
             triggeringObject = collision.gameObject;
         }
