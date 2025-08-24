@@ -41,11 +41,11 @@ public class PlayerAnimator : MonoBehaviour
 
         if (GetComponent<IEntity>().IsTowardsLeft())
         {
-            transform.localScale = new Vector3(-1,1,1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
 
         if (GetComponent<IPawn>().IsOnTheWall())
