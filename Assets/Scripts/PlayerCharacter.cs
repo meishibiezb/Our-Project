@@ -7,14 +7,15 @@ using UnityEngine;
 public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
 {
     Rigidbody2D rb;
-    Animator anim;
     int health;
     bool isGrounded;
     bool isTowardsLeft;
     GameObject triggeringObject;
-    public GameObject wall;
     bool isClambering;
+    public GameObject wall;
+    public bool isAbsorbing; // 是否处于吸收状态
     List<GameObject> abilityInstances;
+    [SerializeField] Vector2 sizeClamp = new Vector2(0.8f, 3f); // 角色缩放范围
     [SerializeField] float jumpForce = 300f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
@@ -29,7 +30,6 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponentInChildren<Animator>();
         health = maxHealth;
         tag = "Player";
         // 实例化技能
@@ -43,11 +43,13 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         }
         isTowardsLeft = false;
         isClambering = false;
+        isAbsorbing = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 设置物理效果
         isClambering = IsOnTheWall() && rb.velocity.y > 0;
         if (isGrounded || isClambering)
         {
@@ -58,6 +60,11 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         {
             rb.constraints = RigidbodyConstraints2D.None;
         }
+
+        // 根据生命值缩放
+        float healthRatio = 1f + ((float)(health - 100) / 200f);
+        healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
+        transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
     }
 
     //碰撞
@@ -190,10 +197,13 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     {
         if (abilityInstances != null && abilityIndex >= 0 && abilityIndex < abilityInstances.Count)
         {
-            //rb.rotation = 0f;
-            //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-            abilityInstances[abilityIndex].GetComponent<IAbility>()?.Activate(GetComponent<IEntity>());
+            var abilityInstance = abilityInstances[abilityIndex].GetComponent<IAbility>();
+            if (abilityInstance == null)
+            {
+                return;
+            }
+            abilityInstance?.EffectBeforeExecute()?.ApplyEffect(GetComponent<IEntity>());
+            abilityInstance?.Activate(GetComponent<IEntity>());
         }
     }
     public bool IsOnTheWall()
@@ -210,9 +220,28 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     {
         return health;
     }
+    public void SetHealth(int health)
+    {
+        if (this.health > maxHealth)
+        {
+            this.health = maxHealth;
+                }
+        else
+        {
+            this.health = health;
+        }
+    }
     public int GetMaxHealth()
     {
         return maxHealth;
+    }
+    public void SetMaxHealth(int maxHealth)
+    {
+        this.maxHealth = maxHealth;
+        if (health > maxHealth)
+        {
+            health = maxHealth;
+        }
     }
     public string GetName()
     {
@@ -253,5 +282,40 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     public bool IsCreature()
     {
         return true;
+    }
+    public bool GetCertainStatus(string status)
+    {
+        if (status == "isAbsorbing")
+        {
+            return isAbsorbing;
+        }
+        if (status == "isClambering")
+        {
+            return isClambering;
+        }
+        if (status == "isGrounded")
+        {
+            return isGrounded;
+        }
+        return false;
+    }
+    public void SetCertainStatus(string status, bool value)
+    {
+        if (status == "isAbsorbing")
+        {
+            isAbsorbing = value;
+            return;
+        }
+        if (status == "isClambering")
+        {
+            isClambering = value;
+            return;
+        }
+        if (status == "isGrounded")
+        {
+            isGrounded = value;
+            return;
+        }
+        return;
     }
 }

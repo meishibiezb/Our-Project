@@ -45,16 +45,24 @@ public interface IEntity
     {
         return null;
     }
+    GameObject[] GetEffects()
+    {
+        return null;
+    }
     void AddAbility(GameObject ability)
     {
         return;
     }
-    GameObject GetWallAttached()
-    {
-        return null;
-    }
     bool IsCreature()
     {
         return false;
+    }
+    bool GetCertainStatus(string status)
+    {
+        return false;
+    }
+    void SetCertainStatus(string status, bool value)
+    {
+        return;
     }
 }

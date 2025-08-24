@@ -16,4 +16,12 @@ public interface IAbility
     {
         return 0f;
     }
+    bool IsContinual()
+    {
+        return false;
+    }
+    IEffect EffectBeforeExecute()
+    {
+        return null;
+    }
 }
