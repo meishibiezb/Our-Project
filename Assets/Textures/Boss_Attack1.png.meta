@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 40226e47a579d8c47a4637976404db23
+guid: c43440a300f787640b83de34ae952986
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\u5B50\u5F39\u7D20\u6750_0"
+      name: Boss_Attack1_0
       rect:
         serializedVersion: 2
-        x: 1434
-        y: 604
-        width: 216
-        height: 218
+        x: 83
+        y: 158
+        width: 151
+        height: 247
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,8 +119,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f9cdc638ec627d342968ff89ca1f073b
-      internalID: -447769981
+      spriteID: c17f80a4b4da2d04986a604e9e36b489
+      internalID: 512783267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss_Attack1_1
+      rect:
+        serializedVersion: 2
+        x: 519
+        y: 160
+        width: 140
+        height: 244
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c5d2481725708d47b366df8c65a3737
+      internalID: -1668980010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Boss_Attack1_2
+      rect:
+        serializedVersion: 2
+        x: 952
+        y: 161
+        width: 137
+        height: 243
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07eb32843e519b64481e39f9c4035cb0
+      internalID: -1794850213
       vertices: []
       indices: 
       edges: []
@@ -136,7 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "\u5B50\u5F39\u7D20\u6750_0": -447769981
+      Boss_Attack1_2: -1794850213
+      Boss_Attack1_0: 512783267
+      Boss_Attack1_1: -1668980010
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
