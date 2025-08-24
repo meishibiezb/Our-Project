@@ -37,7 +37,12 @@ public class DefaultBullet : MonoBehaviour, IEntity, IProjectile
     // Åö×²
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!collision.gameObject.CompareTag(tag))
+        bool b = false;
+        if (collision.gameObject.GetComponent<IEntity>() != null)
+        {
+            b = collision.gameObject.GetComponent<IEntity>().IsCreature();
+        }
+        if (!collision.gameObject.CompareTag(tag) && b)
         {
             var target = collision.gameObject.GetComponent<IEntity>();
             float relativeVelocity = collision.relativeVelocity.magnitude;
@@ -83,5 +88,9 @@ public class DefaultBullet : MonoBehaviour, IEntity, IProjectile
     public void SetDamage(int damage)
     {
         this.damage = damage;
+    }
+    public float GetEnergy()
+    {
+        return 0.5f * rb.mass * math.pow(rb.velocity.magnitude, 2.0f);
     }
 }

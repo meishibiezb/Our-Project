@@ -8,9 +8,17 @@ public interface IEntity
     {
         return 0;
     }
+    void SetHealth(int health)
+    {
+        return;
+    }
     int GetMaxHealth()
     {
         return 0;
+    }
+    void SetMaxHealth(int maxHealth)
+    {
+        return;
     }
     void Damaged(int damage)
     {

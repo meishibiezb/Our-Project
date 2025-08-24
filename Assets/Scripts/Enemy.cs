@@ -39,7 +39,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     // Åö×²
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
             var player = collision.gameObject.GetComponent<IEntity>();
             if ((player != null) && GetComponent<IEntity>().IsDead())
