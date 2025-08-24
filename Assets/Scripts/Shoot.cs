@@ -48,6 +48,7 @@ public class Shoot : MonoBehaviour, IAbility
         }
         var projectile = Instantiate(bullet, pos, Quaternion.identity);
         projectile.GetComponent<Rigidbody2D>().AddForce(new Vector2(isLeft ? -shootForce.x : shootForce.x, shootForce.y));
+        projectile.GetComponent<IProjectile>()?.SetCreator(speller);
         projectile.tag = speller.GetGameObject().tag;
     }
 }

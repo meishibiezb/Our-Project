@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class DefaultBullet : MonoBehaviour, IEntity
+public class DefaultBullet : MonoBehaviour, IEntity, IProjectile
 {
     Rigidbody2D rb;
     float liftTimer = 0;
+    IEntity creator;
     [SerializeField] int damage = 10;
     [SerializeField] bool removeOnHit = true;
     [SerializeField] float liftDuriation = 5;
@@ -60,5 +61,27 @@ public class DefaultBullet : MonoBehaviour, IEntity
     public bool IsCreature()
     {
         return false;
+    }
+
+    // 实现接口IProjectile
+    public void SetCreator(IEntity creator)
+    {
+        this.creator = creator;
+    }
+    public IEntity GetCreator()
+    {
+        return creator;
+    }
+    public GameObject GetCreatorObject()
+    {
+        return creator?.GetGameObject();
+    }
+    public int GetDamage()
+    {
+        return damage;
+    }
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
     }
 }
