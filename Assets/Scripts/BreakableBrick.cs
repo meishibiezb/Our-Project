@@ -13,7 +13,6 @@ public class BreakableBrick : MonoBehaviour, IEntity
     {
         
     }
-
     void Awake()
     {
         health = maxHealth; // 初始化生命值
