@@ -28,4 +28,8 @@ public interface IAbility
     {
         return false;
     }
+    string GetAbilityName()
+    {
+        return "";
+    }
 }

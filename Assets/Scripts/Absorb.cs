@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Absorb : MonoBehaviour, IAbility
 {
+    string AbilityName = "Absorb";
     [SerializeField] float continualTime = 0.5f; // 持续时间，0表示瞬发
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class Absorb : MonoBehaviour, IAbility
         action?.Invoke();
     }
 
+    // 实现接口IAbility
     public void Activate(IEntity speller)
     {
         if (speller == null)
@@ -83,6 +85,10 @@ public class Absorb : MonoBehaviour, IAbility
     {
         //return new EffectBeforeAbsorb();
         return null;
+    }
+    public string GetAbilityName()
+    {
+        return AbilityName;
     }
 }
 
