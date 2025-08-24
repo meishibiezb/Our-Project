@@ -23,6 +23,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
     [SerializeField] GameObject[] abilities; // 技能对象
+    [SerializeField] float divisor = 200f; // 生命值与缩放的除数
 
     // Start is called before the first frame update
     void Start()
@@ -152,7 +153,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     private void ScaleByHealth()
     {
         // 根据生命值缩放
-        float healthRatio = 1f + ((float)(health - 100) / 200f);
+        float healthRatio = 1f + ((float)(health - 100) / divisor);
         healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
         if (IsTowardsLeft())
         {
