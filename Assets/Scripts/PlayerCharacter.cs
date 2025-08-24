@@ -12,9 +12,10 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     bool isTowardsLeft;
     GameObject triggeringObject;
     bool isClambering;
-    public GameObject wall;
-    public bool isAbsorbing; // 是否处于吸收状态
+    GameObject wall;
+    bool isAbsorbing; // 是否处于吸收状态
     List<GameObject> abilityInstances;
+    [SerializeField] bool enablePhysicalEffect = true; // 是否启用物理效果
     [SerializeField] Vector2 sizeClamp = new Vector2(0.8f, 3f); // 角色缩放范围
     [SerializeField] float jumpForce = 300f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
@@ -56,7 +57,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             rb.rotation = 0f;
             rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
-        else
+        else if (enablePhysicalEffect)
         {
             rb.constraints = RigidbodyConstraints2D.None;
         }
