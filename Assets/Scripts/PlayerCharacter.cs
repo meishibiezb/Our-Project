@@ -65,7 +65,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         // 根据生命值缩放
         float healthRatio = 1f + ((float)(health - 100) / 200f);
         healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
-        transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
+        if (IsTowardsLeft())
+        {
+            transform.localScale = new Vector3(-healthRatio, healthRatio, 1f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
+        }
     }
 
     //碰撞
@@ -138,6 +145,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         GetComponent<SpriteRenderer>().enabled = false; // 隐藏角色
         Destroy(gameObject);
     }
+    private bool FindPassiveAbility(string target)
+    {
+        foreach (var ability in abilityInstances)
+        {
+            var abilityInstance = ability.GetComponent<IAbility>();
+            if (!abilityInstance.IsPassive())
+            {
+                continue;
+            }
+            if (abilityInstance.GetAbilityName() == target)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     //实现接口IPawn
     public void Jump()
@@ -155,7 +178,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     }
     public void Clmaber(float direction)
     {
-        if (direction > 0 && wall != null)
+        if (direction > 0 && wall != null && FindPassiveAbility("Clamber"))
         {
             rb.velocity = new Vector2(0f, moveSpeed * 0.45f);
             isGrounded= false;
@@ -201,6 +224,11 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             var abilityInstance = abilityInstances[abilityIndex].GetComponent<IAbility>();
             if (abilityInstance == null)
             {
+                return;
+            }
+            if (abilityInstance.IsPassive())
+            {
+                UseAbility(abilityIndex + 1);
                 return;
             }
             abilityInstance?.EffectBeforeExecute()?.ApplyEffect(GetComponent<IEntity>());
