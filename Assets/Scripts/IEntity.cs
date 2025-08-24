@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public interface IEntity
 {
@@ -64,5 +65,9 @@ public interface IEntity
     void SetCertainStatus(string status, bool value)
     {
         return;
+    }
+    UnityEvent GetEventByName(string name)
+    {
+        return null;
     }
 }

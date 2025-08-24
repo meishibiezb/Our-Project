@@ -24,6 +24,9 @@ public interface IAbility
     {
         return null;
     }
+    IEffect EffectOnAdd() {
+        return null;
+    }
     bool IsPassive()
     {
         return false;

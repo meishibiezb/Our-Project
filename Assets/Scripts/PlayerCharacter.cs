@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
 {
@@ -15,6 +16,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     GameObject wall;
     bool isAbsorbing; // 是否处于吸收状态
     List<GameObject> abilityInstances;
+    UnityEvent onDamaged;
     [SerializeField] bool enablePhysicalEffect = true; // 是否启用物理效果
     [SerializeField] Vector2 sizeClamp = new Vector2(0.8f, 3f); // 角色缩放范围
     [SerializeField] float jumpForce = 300f; // 跳跃力度
@@ -33,13 +35,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth;
         tag = "Player";
+        onDamaged = new UnityEvent();
         // 实例化技能
         if (abilities != null)
         {
             abilityInstances = new List<GameObject>();
             for (int i = 0; i < abilities.Length; i++)
             {
-                abilityInstances.Add(Instantiate(abilities[i], transform));
+                AddAbility(abilities[i]);
             }
         }
         isTowardsLeft = false;
@@ -50,29 +53,9 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     // Update is called once per frame
     void Update()
     {
-        // 设置物理效果
-        isClambering = IsOnTheWall() && rb.velocity.y > 0;
-        if (isGrounded || isClambering)
-        {
-            rb.rotation = 0f;
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        }
-        else if (enablePhysicalEffect)
-        {
-            rb.constraints = RigidbodyConstraints2D.None;
-        }
-
-        // 根据生命值缩放
-        float healthRatio = 1f + ((float)(health - 100) / 200f);
-        healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
-        if (IsTowardsLeft())
-        {
-            transform.localScale = new Vector3(-healthRatio, healthRatio, 1f);
-        }
-        else
-        {
-            transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
-        }
+        SetPhysicalEffect();
+        ScaleByHealth();
+        UsePassiveAbilities();
     }
 
     //碰撞
@@ -152,6 +135,54 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         GetComponent<SpriteRenderer>().enabled = false; // 隐藏角色
         Destroy(gameObject);
     }
+    private void SetPhysicalEffect()
+    {
+        // 设置物理效果
+        isClambering = IsOnTheWall() && rb.velocity.y > 0;
+        if (isGrounded || isClambering)
+        {
+            rb.rotation = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        else if (enablePhysicalEffect)
+        {
+            rb.constraints = RigidbodyConstraints2D.None;
+        }
+    }
+    private void ScaleByHealth()
+    {
+        // 根据生命值缩放
+        float healthRatio = 1f + ((float)(health - 100) / 200f);
+        healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
+        if (IsTowardsLeft())
+        {
+            transform.localScale = new Vector3(-healthRatio, healthRatio, 1f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
+        }
+    }
+    private void UsePassiveAbilities()
+    {
+        for (int abilityIndex = 0; abilityIndex < abilityInstances.Count; abilityIndex++)
+        {
+            if (abilityInstances != null && abilityIndex >= 0 && abilityIndex < abilityInstances.Count)
+            {
+                var abilityInstance = abilityInstances[abilityIndex].GetComponent<IAbility>();
+                if (abilityInstance == null)
+                {
+                    continue;
+                }
+                if (abilityInstance.IsPassive())
+                {
+                    abilityInstance?.EffectBeforeExecute()?.ApplyEffect(GetComponent<IEntity>());
+                    abilityInstance?.Activate(GetComponent<IEntity>());
+                }
+            }
+        }
+    }
+
     private bool FindPassiveAbility(string target)
     {
         foreach (var ability in abilityInstances)
@@ -258,14 +289,15 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     }
     public void SetHealth(int health)
     {
-        if (this.health > maxHealth)
+        if (health > maxHealth)
         {
             this.health = maxHealth;
-                }
+        }
         else
         {
             this.health = health;
         }
+        this.health = math.max(this.health, 0);
     }
     public int GetMaxHealth()
     {
@@ -289,8 +321,8 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     }
     public void Damaged(int damage)
     {
-        health -= damage;
-        if (health < 0) health = 0;
+        SetHealth(health - damage);
+        onDamaged?.Invoke();
         Debug.Log($"{tag} took {damage} damage, current health: {health}");
         if (health == 0)
         {
@@ -313,7 +345,9 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     public void AddAbility(GameObject ability)
     {
         abilityInstances ??= new List<GameObject>();
-        abilityInstances.Add(Instantiate(ability, transform));
+        var ab = Instantiate(ability, transform);
+        abilityInstances.Add(ab);
+        ab.GetComponent<IAbility>()?.EffectOnAdd()?.ApplyEffect(GetComponent<IEntity>());
     }
     public bool IsCreature()
     {
@@ -353,5 +387,15 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             return;
         }
         return;
+    }
+    public UnityEvent GetEventByName(string eventName)
+    {
+        if (eventName == "onDamaged")
+        {
+            Debug.Log("Get onDamaged event");
+            return onDamaged;
+        }
+        Debug.LogError($"Event {eventName} not found in {tag}");
+        return null;
     }
 }

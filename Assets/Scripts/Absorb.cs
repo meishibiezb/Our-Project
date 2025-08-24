@@ -13,7 +13,6 @@ public class Absorb : MonoBehaviour, IAbility
     {
 
     }
-
     void Awake()
     {
     }
