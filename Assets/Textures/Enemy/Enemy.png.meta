@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e46f1825b4db6f4187be27f55fc4437
+guid: db4caaa5cb7e96345aba779f708c7bad
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,85 +105,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Climb_0
+      name: Enemy_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 0
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.30247912, y: 0.3611368}
+        x: 30
+        y: 57
+        width: 476
+        height: 314
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0a5bb7d7db7a442befd022ebe30a80
-      internalID: 980093753
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Climb_1
-      rect:
-        serializedVersion: 2
-        x: 532
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.28404382, y: 0.39353815}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 37592120cb058514eb36436e9b3ef81c
-      internalID: -1189566556
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Climb_2
-      rect:
-        serializedVersion: 2
-        x: 992
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.31828073, y: 0.4213108}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c56ad4bb523d21b4094cdd3b8858c6be
-      internalID: 2119385001
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Player_Climb_3
-      rect:
-        serializedVersion: 2
-        x: 1455
-        y: 0.5
-        width: 463.5
-        height: 528.5
-      alignment: 9
-      pivot: {x: 0.22053562, y: 0.4375707}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d8df2fd325657a747b23bb1b3d42bbef
-      internalID: -515902917
+      spriteID: 4b530d0f31c78ed4ea99a9566ceb6a31
+      internalID: -860750361
       vertices: []
       indices: 
       edges: []
@@ -199,10 +136,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Climb_1: -1189566556
-      Player_Climb_3: -515902917
-      Player_Climb_2: 2119385001
-      Player_Climb_0: 980093753
+      Enemy_0: -860750361
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

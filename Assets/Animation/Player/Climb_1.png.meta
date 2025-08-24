@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e46f1825b4db6f4187be27f55fc4437
+guid: e77b46677c3a32847a03b30710d89a3c
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,85 +105,106 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Climb_0
+      name: Climb_1_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 0
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.30247912, y: 0.3611368}
+        x: 87
+        y: 57
+        width: 296
+        height: 305
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0a5bb7d7db7a442befd022ebe30a80
-      internalID: 980093753
+      spriteID: 1520b829ff29baa438c7a799a2f3d0ed
+      internalID: -672223089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_1
+      name: Climb_1_1
       rect:
         serializedVersion: 2
-        x: 532
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.28404382, y: 0.39353815}
+        x: 599
+        y: 51
+        width: 236
+        height: 398
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37592120cb058514eb36436e9b3ef81c
-      internalID: -1189566556
+      spriteID: 41f35f700d73f75498aa7af466681b07
+      internalID: 1300322319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_2
+      name: Climb_1_2
       rect:
         serializedVersion: 2
-        x: 992
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.31828073, y: 0.4213108}
+        x: 985
+        y: 69
+        width: 327
+        height: 421
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c56ad4bb523d21b4094cdd3b8858c6be
-      internalID: 2119385001
+      spriteID: d0b20b826fd408041ae5f6d710ad3e79
+      internalID: 2144278475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_3
+      name: Climb_1_3
       rect:
         serializedVersion: 2
-        x: 1455
-        y: 0.5
-        width: 463.5
-        height: 528.5
-      alignment: 9
-      pivot: {x: 0.22053562, y: 0.4375707}
+        x: 1465
+        y: 67
+        width: 296
+        height: 435
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8df2fd325657a747b23bb1b3d42bbef
-      internalID: -515902917
+      spriteID: 34686e0be40d87746ac3deaa0f8bb304
+      internalID: 424037479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Climb_1_4
+      rect:
+        serializedVersion: 2
+        x: 1498
+        y: 63
+        width: 89
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e02d3fdb27b4e3341a40c2087e686d0b
+      internalID: 91826230
       vertices: []
       indices: 
       edges: []
@@ -199,10 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Climb_1: -1189566556
-      Player_Climb_3: -515902917
-      Player_Climb_2: 2119385001
-      Player_Climb_0: 980093753
+      Climb_1_0: -672223089
+      Climb_1_3: 424037479
+      Climb_1_4: 91826230
+      Climb_1_1: 1300322319
+      Climb_1_2: 2144278475
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

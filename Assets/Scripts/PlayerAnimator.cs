@@ -45,7 +45,16 @@ public class PlayerAnimator : MonoBehaviour
         {
             transform.localScale = new Vector3(1, 1, 1);
         }
-        
+
+        if (GetComponent<IPawn>().IsOnTheWall())
+        {
+            anim.SetBool("isClimb", GetComponent<IPawn>().IsOnTheWall());
+        }
+        else
+        {
+            anim.SetBool("isClimb", GetComponent<IPawn>().IsOnTheWall());
+        }
+
     }
 
 
