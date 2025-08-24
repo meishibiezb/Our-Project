@@ -317,6 +317,14 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8868367855729346047, guid: 856ea7acf420ffa48b0c5d0037483273, type: 3}
+      propertyPath: abilities.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8868367855729346047, guid: 856ea7acf420ffa48b0c5d0037483273, type: 3}
+      propertyPath: abilities.Array.data[1]
+      value: 
+      objectReference: {fileID: 2324194107396563021, guid: c65b798575977ea4da11f4da6cfa9e69, type: 3}
     m_RemovedComponents:
     - {fileID: 8868367855729345985, guid: 856ea7acf420ffa48b0c5d0037483273, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 856ea7acf420ffa48b0c5d0037483273, type: 3}
