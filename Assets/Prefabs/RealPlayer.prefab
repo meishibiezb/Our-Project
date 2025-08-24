@@ -272,12 +272,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wall: {fileID: 0}
+  isAbsorbing: 0
+  sizeClamp: {x: 0.8, y: 3}
   jumpForce: 1000
   moveSpeed: 5
   maxHealth: 100
   abilities:
   - {fileID: 960218816515671736, guid: 9774b0a85fee8c44e8e7fa82302908be, type: 3}
-  - {fileID: 6569084899564830436, guid: f674dcad7bf876443bfa3dd0698b18ed, type: 3}
 --- !u!114 &1393464025353675979
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -37,6 +37,8 @@ public class PlayerAnimator : MonoBehaviour
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isGrounded", isGrounded);
 
+        anim.SetBool("isAbsorbing", GetComponent<IEntity>().GetCertainStatus("isAbsorbing"));
+
         if (GetComponent<IEntity>().IsTowardsLeft())
         {
             transform.localScale = new Vector3(-1,1,1);
