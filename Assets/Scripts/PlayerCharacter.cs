@@ -65,7 +65,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         // 根据生命值缩放
         float healthRatio = 1f + ((float)(health - 100) / 200f);
         healthRatio = Mathf.Clamp(healthRatio, sizeClamp.x, sizeClamp.y);
-        transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
+        if (IsTowardsLeft())
+        {
+            transform.localScale = new Vector3(-healthRatio, healthRatio, 1f);
+        }
+        else
+        {
+            transform.localScale = new Vector3(healthRatio, healthRatio, 1f);
+        }
     }
 
     //碰撞
