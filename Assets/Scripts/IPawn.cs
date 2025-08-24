@@ -28,4 +28,8 @@ public interface IPawn
     {
         return false;
     }
+    bool IsClambering()
+    {
+        return false;
+    }
 }

@@ -200,6 +200,10 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     {
         return wall != null;
     }
+    public bool IsClambering()
+    {
+        return isClambering;
+    }
 
     // 实现接口IEntity
     public int GetHealth()
