@@ -60,6 +60,11 @@ public class Absorb : MonoBehaviour, IAbility
             speller.SetCertainStatus("isAbsorbing", true);
             StartCoroutine(WaitAndDo(continualTime, () =>
             {
+                if (speller.TriggeringObject() != triggeringObj)
+                {
+                    Debug.LogError("Triggering object changed during absorption, aborting.");
+                    return;
+                }
                 var abilities = entity.GetAbilities();
                 // 先吸收技能
                 foreach (var ability in abilities)
