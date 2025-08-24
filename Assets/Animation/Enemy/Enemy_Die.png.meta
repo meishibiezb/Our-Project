@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e46f1825b4db6f4187be27f55fc4437
+guid: d96b5baec80517d45968513f922d5d30
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 60
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -105,85 +105,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Climb_0
+      name: Enemy_Die_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 0
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.30247912, y: 0.3611368}
+        x: 26
+        y: 37.33333
+        width: 291.5
+        height: 203.66667
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0a5bb7d7db7a442befd022ebe30a80
-      internalID: 980093753
+      spriteID: 6b7dc660aba43b74c81ea43b4f643b0a
+      internalID: -1380914644
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_1
+      name: Enemy_Die_1
       rect:
         serializedVersion: 2
-        x: 532
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.28404382, y: 0.39353815}
+        x: 339
+        y: 37.33333
+        width: 291.5
+        height: 203.66667
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37592120cb058514eb36436e9b3ef81c
-      internalID: -1189566556
+      spriteID: d1855f23c27e99a4bb48d7cfa03adfe8
+      internalID: 1774434536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_2
+      name: Enemy_Die_2
       rect:
         serializedVersion: 2
-        x: 992
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.31828073, y: 0.4213108}
+        x: 652
+        y: 37.33333
+        width: 291.5
+        height: 203.66667
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c56ad4bb523d21b4094cdd3b8858c6be
-      internalID: 2119385001
+      spriteID: 323acaf7ae184ca4a8178169f36ce93a
+      internalID: -1406862075
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_3
+      name: Enemy_Die_3
       rect:
         serializedVersion: 2
-        x: 1455
-        y: 0.5
-        width: 463.5
-        height: 528.5
-      alignment: 9
-      pivot: {x: 0.22053562, y: 0.4375707}
+        x: 965
+        y: 37.33333
+        width: 291.5
+        height: 203.66667
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8df2fd325657a747b23bb1b3d42bbef
-      internalID: -515902917
+      spriteID: 50215576ab5669042b80584498b36bcf
+      internalID: 692198089
       vertices: []
       indices: 
       edges: []
@@ -199,10 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Climb_1: -1189566556
-      Player_Climb_3: -515902917
-      Player_Climb_2: 2119385001
-      Player_Climb_0: 980093753
+      Enemy_Die_0: -1380914644
+      Enemy_Die_2: -1406862075
+      Enemy_Die_1: 1774434536
+      Enemy_Die_3: 692198089
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

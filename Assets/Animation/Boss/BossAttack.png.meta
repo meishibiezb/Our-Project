@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0e46f1825b4db6f4187be27f55fc4437
+guid: ce514c2b69993d14fb0be22d06e77ec0
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,85 +105,85 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Player_Climb_0
+      name: BossAttack_0
       rect:
         serializedVersion: 2
-        x: 55
-        y: 0
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.30247912, y: 0.3611368}
+        x: 0
+        y: 102
+        width: 474
+        height: 547
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c0a5bb7d7db7a442befd022ebe30a80
-      internalID: 980093753
+      spriteID: a48620c37d4fc234dbb2ab0a35d9f744
+      internalID: 412827759
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_1
+      name: BossAttack_1
       rect:
         serializedVersion: 2
-        x: 532
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.28404382, y: 0.39353815}
+        x: 487
+        y: 104
+        width: 468
+        height: 547
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 37592120cb058514eb36436e9b3ef81c
-      internalID: -1189566556
+      spriteID: 61c01d6bd9f7ce540b2e26d8ed4f6d0d
+      internalID: 1117219061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_2
+      name: BossAttack_2
       rect:
         serializedVersion: 2
-        x: 992
-        y: 2
-        width: 464
-        height: 528
-      alignment: 9
-      pivot: {x: 0.31828073, y: 0.4213108}
+        x: 962
+        y: 104
+        width: 477
+        height: 547
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c56ad4bb523d21b4094cdd3b8858c6be
-      internalID: 2119385001
+      spriteID: adb96d1269101054285cc62f7cf84804
+      internalID: 1403942777
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Player_Climb_3
+      name: BossAttack_3
       rect:
         serializedVersion: 2
-        x: 1455
-        y: 0.5
-        width: 463.5
-        height: 528.5
-      alignment: 9
-      pivot: {x: 0.22053562, y: 0.4375707}
+        x: 1441
+        y: 103
+        width: 479
+        height: 548
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d8df2fd325657a747b23bb1b3d42bbef
-      internalID: -515902917
+      spriteID: a025e019da77a2a4cbf44c21bbbcbe47
+      internalID: 1069292520
       vertices: []
       indices: 
       edges: []
@@ -199,10 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Player_Climb_1: -1189566556
-      Player_Climb_3: -515902917
-      Player_Climb_2: 2119385001
-      Player_Climb_0: 980093753
+      BossAttack_2: 1403942777
+      BossAttack_3: 1069292520
+      BossAttack_0: 412827759
+      BossAttack_1: 1117219061
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

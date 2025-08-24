@@ -37,15 +37,26 @@ public class PlayerAnimator : MonoBehaviour
         anim.SetBool("isMoving", isMoving);
         anim.SetBool("isGrounded", isGrounded);
 
+        anim.SetBool("isAbsorbing", GetComponent<IEntity>().GetCertainStatus("isAbsorbing"));
+
         if (GetComponent<IEntity>().IsTowardsLeft())
         {
-            transform.localScale = new Vector3(-1,1,1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
         else
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
-        
+
+        if (GetComponent<IPawn>().IsOnTheWall())
+        {
+            anim.SetBool("isClimb", GetComponent<IPawn>().IsOnTheWall());
+        }
+        else
+        {
+            anim.SetBool("isClimb", GetComponent<IPawn>().IsOnTheWall());
+        }
+
     }
 
 
