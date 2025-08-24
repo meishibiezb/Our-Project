@@ -203,6 +203,11 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             {
                 return;
             }
+            if (abilityInstance.IsPassive())
+            {
+                UseAbility(abilityIndex + 1);
+                return;
+            }
             abilityInstance?.EffectBeforeExecute()?.ApplyEffect(GetComponent<IEntity>());
             abilityInstance?.Activate(GetComponent<IEntity>());
         }

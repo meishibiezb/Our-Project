@@ -24,4 +24,8 @@ public interface IAbility
     {
         return null;
     }
+    bool IsPassive()
+    {
+        return false;
+    }
 }
