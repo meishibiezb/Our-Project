@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 5440683868917994237, guid: 07596825ac7223349847bbc18e4a9f4a, type: 3}
-  bias: {x: 1, y: 0, z: 0}
+  bias: {x: 1.5, y: 0, z: 0}
   shootForce: {x: 400, y: 20}
   cooldownThreshold: 0.25
-  cooldownTimer: 0

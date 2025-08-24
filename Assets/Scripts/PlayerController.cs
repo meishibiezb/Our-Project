@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //Ã¯‘æ
-        if (Input.GetButton("Jump"))
+        if (Input.GetButtonDown("Jump"))
         {
             character.Jump();
         }
@@ -47,8 +47,13 @@ public class PlayerController : MonoBehaviour
     //FixedUpdate is called at a fixed interval and is used for physics calculations
     void FixedUpdate()
     {
-        //“∆∂Ø
+        //◊Û”““∆∂Ø
         float moveInput = Input.GetAxis("Horizontal");
         character.Move(moveInput);
+        //≈ ≈¿
+        if (Input.GetKey(KeyCode.W))
+        {
+            character.Clmaber(1f);
+        }
     }
 }

@@ -8,6 +8,10 @@ public interface IPawn
     {
         return;
     }
+    void Clmaber(float direction)
+    {
+        return;
+    }
     void Move(float direction)
     {
         return;

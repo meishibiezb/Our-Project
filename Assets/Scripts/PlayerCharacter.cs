@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
@@ -12,6 +13,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     bool isTowardsLeft;
     GameObject triggeringObject;
     public GameObject wall;
+    bool isClambering;
     List<GameObject> abilityInstances;
     [SerializeField] float jumpForce = 300f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
@@ -40,6 +42,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             }
         }
         isTowardsLeft = false;
+        isClambering = false;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        isClambering = IsOnTheWall() && rb.velocity.y > 0;
+        if (isGrounded || isClambering)
+        {
+            rb.rotation = 0f;
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints2D.None;
+        }
     }
 
     //碰撞
@@ -60,15 +78,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
 
             }
         }
-        
+
         // 处理与其他物体的碰撞逻辑
+        if (collision.gameObject.GetComponent<IProjectile>() != null && CompareTag(collision.gameObject.tag))
+        {
+            return; // 不踩自己的子弹
+        }
         var contactPoints = new ContactPoint2D[collision.contactCount];
         collision.GetContacts(contactPoints);
         foreach (var contact in contactPoints)
         {
-            if (contact.normal.x < 0.2f)
+            if (Mathf.Abs(contact.normal.x) < 0.5f)
             {
+                rb.rotation = 0f;
+                rb.constraints = RigidbodyConstraints2D.FreezeRotation;
                 isGrounded = true;
+                break;
             }
         }
     }
@@ -96,13 +121,6 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //isGrounded = Mathf.Abs(rb.velocity.y) < 0.01f;
-    }
-
-
     //内部逻辑
     private void Die()
     {
@@ -112,18 +130,12 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         GetComponent<SpriteRenderer>().enabled = false; // 隐藏角色
         Destroy(gameObject);
     }
-    private void Clamber()
-    {
-        rb.velocity = new Vector2(0f, moveSpeed * 0.45f);
-    }
 
     //实现接口IPawn
     public void Jump()
     {
-        if (rb != null && IsOnTheWall())
+        if (rb != null && IsOnTheWall() && !isGrounded)
         {
-            Clamber();
-
             return;// 贴墙时不进行正常跳跃
         }
         //跳跃（不贴墙）
@@ -133,13 +145,22 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             isGrounded = false;
         }
     }
+    public void Clmaber(float direction)
+    {
+        if (direction > 0 && wall != null)
+        {
+            rb.velocity = new Vector2(0f, moveSpeed * 0.45f);
+            isGrounded= false;
+        }
+    }
     public void Move(float direction)
     {
         Vector2 moveDirection = new Vector2(direction, 0);
-        // 贴墙
-        if (rb != null && IsOnTheWall())
+        // 贴墙并且朝向墙壁时，进行贴墙移动
+        if (rb != null && IsOnTheWall() && (wall.transform.position.x - rb.position.x) * direction > 0 && !isClambering)
         {
-            rb.AddForce(moveDirection * 10f);
+            rb.velocity *= new Vector2(0.1f, 0.5f);
+            //Debug.Log($"direction:{direction},wall.transform.position.x - rb.position.x:{wall.transform.position.x - rb.position.x}");
 
             return;// 贴墙时不进行正常移动
         }
@@ -153,6 +174,13 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         {
             isTowardsLeft = false;
         }
+        if (rb.constraints == RigidbodyConstraints2D.None)
+        {
+            if (math.abs(rb.angularVelocity) <= 360f)
+            {
+                rb.AddTorque(-direction * 180f);
+            }
+        }
     }
     public bool IsGrounded()
     {
@@ -162,6 +190,9 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     {
         if (abilityInstances != null && abilityIndex >= 0 && abilityIndex < abilityInstances.Count)
         {
+            //rb.rotation = 0f;
+            //rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
             abilityInstances[abilityIndex].GetComponent<IAbility>()?.Activate(GetComponent<IEntity>());
         }
     }
