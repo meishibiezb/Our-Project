@@ -123,14 +123,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     // ´¥·¢
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag(tag) && collision.isTrigger)
+        if (!collision.gameObject.CompareTag(tag) && collision.isTrigger && collision.gameObject.GetComponent<LevelData>() == null)
         {
             triggeringObject = collision.gameObject;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!collision.gameObject.CompareTag(tag) && collision.isTrigger)
+        if (!collision.gameObject.CompareTag(tag) && collision.isTrigger && collision.gameObject.GetComponent<LevelData>() == null)
         {
             triggeringObject = collision.gameObject;
         }
