@@ -5,6 +5,8 @@ using UnityEngine;
 public class Absorb : MonoBehaviour, IAbility
 {
     string AbilityName = "Absorb";
+    float cooldownTimer = 0f;
+    [SerializeField] float cooldownThreshold;
     [SerializeField] float continualTime = 0.5f; // 持续时间，0表示瞬发
     // Start is called before the first frame update
     void Start()
@@ -12,10 +14,14 @@ public class Absorb : MonoBehaviour, IAbility
 
     }
 
+    void Awake()
+    {
+    }
+
     // Update is called once per frame
     void Update()
     {
-
+        cooldownTimer += Time.deltaTime;
     }
 
     // 内部逻辑
@@ -28,6 +34,12 @@ public class Absorb : MonoBehaviour, IAbility
     // 实现接口IAbility
     public void Activate(IEntity speller)
     {
+        if (cooldownTimer < cooldownThreshold)
+        {
+            Debug.LogError("Waiting for cooldown:" + cooldownTimer + "<" + cooldownThreshold);
+            return;
+        }
+        cooldownTimer = 0f;
         if (speller == null)
         {
             Debug.LogError("speller is null");
@@ -60,6 +72,10 @@ public class Absorb : MonoBehaviour, IAbility
             speller.SetCertainStatus("isAbsorbing", true);
             StartCoroutine(WaitAndDo(continualTime, () =>
             {
+                if (triggeringObj == null)
+                {
+                    return;
+                }
                 if (speller.TriggeringObject() != triggeringObj)
                 {
                     Debug.LogError("Triggering object changed during absorption, aborting.");

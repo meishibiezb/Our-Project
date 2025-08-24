@@ -37,10 +37,10 @@ public class DefaultBullet : MonoBehaviour, IEntity, IProjectile
     // Åö×²
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        bool b = false;
+        bool b = true;
         if (collision.gameObject.GetComponent<IEntity>() != null)
         {
-            b = collision.gameObject.GetComponent<IEntity>().IsCreature();
+            //b = collision.gameObject.GetComponent<IEntity>().IsCreature();
         }
         if (!collision.gameObject.CompareTag(tag) && b)
         {
@@ -54,6 +54,10 @@ public class DefaultBullet : MonoBehaviour, IEntity, IProjectile
                 {
                     Destroy(gameObject);
                 }
+            }
+            else
+            {
+                //Debug.Log($"gameObject:{collision.gameObject.name},target:{target.GetName()},enregy:{energy},target.IsDead:{target.IsDead()}");
             }
         }
     }
