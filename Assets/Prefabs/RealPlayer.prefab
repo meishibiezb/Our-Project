@@ -107,7 +107,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0d03814847edbd24ebeaff1f6d9a48c6, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -169,12 +169,12 @@ MonoBehaviour:
   triggeringObject: {fileID: 0}
   enablePhysicalEffect: 0
   sizeClamp: {x: 0.8, y: 3}
-  jumpForce: 1000
+  jumpForce: 1200
   moveSpeed: 5
   maxHealth: 100
+  divisor: 1200
   abilities:
   - {fileID: 960218816515671736, guid: 9774b0a85fee8c44e8e7fa82302908be, type: 3}
-  divisor: 1200
 --- !u!114 &5264425503330527644
 MonoBehaviour:
   m_ObjectHideFlags: 0

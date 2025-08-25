@@ -37,7 +37,7 @@ public class Chase : MonoBehaviour, ITask
         }
         Debug.DrawRay(rayOrigin + bias, rayDirection * chasingRadius, Color.red, debugDrawDuration);
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin + bias, rayDirection, chasingRadius);
-        //Debug.Log($"{hit.collider != null},{hit.collider.gameObject.name}");
+        Debug.Log($"{hit.collider != null},{hit.collider.gameObject.name},{hit.collider.CompareTag("Player")},{hit.collider.gameObject.GetComponent<IEntity>().IsCreature()}");
         if (hit.collider != null && hit.collider.CompareTag("Player") && hit.collider.gameObject.GetComponent<IEntity>().IsCreature())
         {
             Debug.Log($"{hit}");

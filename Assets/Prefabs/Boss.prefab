@@ -167,7 +167,8 @@ MonoBehaviour:
   jumpForce: 300
   moveSpeed: 5
   maxHealth: 100
-  abilities: []
+  abilities:
+  - {fileID: 3869966887683220541, guid: 33870e9739f38da46acf9e97d4efe188, type: 3}
   effectAppliedOnAbsorb: []
 --- !u!1 &4433590826449037774
 GameObject:

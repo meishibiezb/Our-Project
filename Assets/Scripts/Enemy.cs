@@ -32,7 +32,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth; // 初始化生命值
         tag = "Enemy"; // 设置标签为 Enemy
-        isTowardsLeft = false;
+        //isTowardsLeft = false;
         isRunning = false;
         isAttacking = false;
         // 实例化技能
