@@ -238,9 +238,9 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
         {
             rb.velocity = new Vector2(moveDirection.x * moveSpeed + rb.velocity.x, rb.velocity.y);
         }
-        if (math.abs(moveDirection.x * moveSpeed) < math.abs(rb.velocity.x) && IsGrounded())
+        if (rb.velocity.x * moveDirection.x < 0)
         {
-            //rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
         }
         if (direction < 0)
         {

@@ -9,8 +9,8 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     bool isGrounded;
     CapsuleCollider2D bd;
     BoxCollider2D tg;
-    bool isTowardsLeft;
-    bool isRunning;
+    public bool isTowardsLeft;
+    public bool isRunning;
     float hitTimer;
     [SerializeField] float jumpForce = 150f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
@@ -31,6 +31,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         health = maxHealth; // 初始化生命值
         tag = "Enemy"; // 设置标签为 Enemy
         isTowardsLeft = false;
+        isRunning = false;
     }
 
     // Start is called before the first frame update
@@ -102,7 +103,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
             movement *= 1.5f;
         }
         rb.velocity = movement;
-        Debug.Log($"{rb.velocity}");
+        //Debug.Log($"{rb.velocity}");
     }
     public void Jump()
     {
@@ -155,6 +156,18 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         {
             isRunning = value;
         }
+        if (status== "isTowardsLeft")
+        {
+            isTowardsLeft = value;
+        }
+    }
+    public bool GetCertainStatus(string status)
+    {
+        if (status == "isRunning")
+        {
+            return isRunning;
+        }
+        return false;
     }
     public bool IsTowardsLeft()
     {
