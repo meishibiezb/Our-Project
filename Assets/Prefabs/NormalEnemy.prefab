@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7364940719101040306}
   - component: {fileID: 4874921501357919924}
   m_Layer: 0
-  m_Name: EnemyWithAnimator
+  m_Name: NormalEnemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,8 @@ MonoBehaviour:
   moveSpeed: 5
   maxHealth: 100
   abilities: []
-  effectAppliedOnAbsorb: []
+  effectAppliedOnAbsorb:
+  - {fileID: 1294146876553570746, guid: e6a1724a9bcbbca44ab9030614a0c940, type: 3}
 --- !u!1 &7070471319842904977
 GameObject:
   m_ObjectHideFlags: 0
