@@ -22,15 +22,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
     [SerializeField] float jumpForce = 300f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
-    [SerializeField] GameObject[] abilities; // 技能对象
     [SerializeField] float divisor = 200f; // 生命值与缩放的除数
+    [SerializeField] GameObject[] abilities; // 技能对象
 
     // Start is called before the first frame update
     void Start()
     {
 
     }
-
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();

@@ -16,7 +16,7 @@ public interface IProjectile
     {
         return;
     }
-    void SetDamege()
+    void SetDamage(int damage)
     {
         return;
     }

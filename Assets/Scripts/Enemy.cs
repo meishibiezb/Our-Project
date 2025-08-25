@@ -9,7 +9,9 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     bool isGrounded;
     CapsuleCollider2D bd;
     BoxCollider2D tg;
-    [SerializeField] float jumpForce = 300f; // 跳跃力度
+    bool isTowardsLeft;
+    bool isRunning;
+    [SerializeField] float jumpForce = 150f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
     [SerializeField] GameObject[] abilities; // 技能对象
@@ -23,6 +25,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         rb = GetComponent<Rigidbody2D>();
         health = maxHealth; // 初始化生命值
         tag = "Enemy"; // 设置标签为 Enemy
+        isTowardsLeft = false;
     }
 
     // Start is called before the first frame update
@@ -78,8 +81,30 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     // 实现接口IPawn
     public void Move(float direction)
     {
-        Vector2 movement = new Vector2(direction * moveSpeed, rb.velocity.y);
-        rb.velocity = movement; // 设置刚体的速度
+        direction = Mathf.Clamp(direction, -1f, 1f);
+        Vector2 movement = new Vector2(direction * moveSpeed, 0f);
+        if (isRunning)
+        {
+            movement *= 1.5f;
+        }
+        rb.velocity = movement;
+        Debug.Log($"{rb.velocity}");
+    }
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            rb.AddForce(new Vector2(0, jumpForce));
+            isGrounded = false; // 跳跃后设置为非地面状态
+        }
+    }
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+    public IEntity GetEntity()
+    {
+        return GetComponent<IEntity>();
     }
 
     // 实现接口IEntity
@@ -98,10 +123,6 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     {
         return health <= 0;
     }
-    public GameObject GetGameObject()
-    {
-        return gameObject;
-    }
     public GameObject[] GetAbilities()
     {
         return abilities;
@@ -113,5 +134,16 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     public GameObject[] GetEffects()
     {
         return effectAppliedOnAbsorb;
+    }
+    public void SetCertainStatus(string status, bool value)
+    {
+        if (status == "isRunning")
+        {
+            isRunning = value;
+        }
+    }
+    public bool IsTowardsLeft()
+    {
+        return isTowardsLeft;
     }
 }

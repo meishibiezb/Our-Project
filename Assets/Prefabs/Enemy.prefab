@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3071476355563841751}
   - component: {fileID: 1095120926211404014}
   - component: {fileID: 3071476355563841768}
+  - component: {fileID: 150801276641781612}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -167,3 +168,17 @@ MonoBehaviour:
   moveSpeed: 5
   maxHealth: 100
   abilities: []
+  effectAppliedOnAbsorb: []
+--- !u!114 &150801276641781612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3071476355563841769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb7f0d1d246ad848b44c7be7ecdd340, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tasks: []

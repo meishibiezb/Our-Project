@@ -32,4 +32,12 @@ public interface IPawn
     {
         return false;
     }
+    IEntity GetEntity()
+    {
+        return null;
+    }
+    GameObject GetGameObject()
+    {
+        return null;
+    }
 }
