@@ -5,7 +5,7 @@ using UnityEngine;
 public class Chase : MonoBehaviour, ITask
 {
     [SerializeField] float chasingRadius = 10f;
-    [SerializeField] Vector2 bias;
+    Vector2 bias;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +37,7 @@ public class Chase : MonoBehaviour, ITask
         }
         Debug.DrawRay(rayOrigin + bias, rayDirection * chasingRadius, Color.red, debugDrawDuration);
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin + bias, rayDirection, chasingRadius);
-        Debug.Log($"{hit.collider != null},{hit.collider.gameObject.name}");
+        //Debug.Log($"{hit.collider != null},{hit.collider.gameObject.name}");
         if (hit.collider != null && hit.collider.CompareTag("Player") && hit.collider.gameObject.GetComponent<IEntity>().IsCreature())
         {
             Debug.Log($"{hit}");
