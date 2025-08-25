@@ -11,7 +11,9 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     BoxCollider2D tg;
     public bool isTowardsLeft;
     public bool isRunning;
+    public bool isAttacking;
     float hitTimer;
+    List<GameObject> abilityInstances;
     [SerializeField] float jumpForce = 150f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
@@ -32,6 +34,16 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         tag = "Enemy"; // 设置标签为 Enemy
         isTowardsLeft = false;
         isRunning = false;
+        isAttacking = false;
+        // 实例化技能
+        if (abilities != null)
+        {
+            abilityInstances = new List<GameObject>();
+            for (int i = 0; i < abilities.Length; i++)
+            {
+                AddAbility(abilities[i]);
+            }
+        }
     }
 
     // Start is called before the first frame update
@@ -122,6 +134,25 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         return GetComponent<IEntity>();
     }
 
+    public void UseAbility(int abilityIndex)
+    {
+        if (abilityInstances != null && abilityIndex >= 0 && abilityIndex < abilityInstances.Count)
+        {
+            var abilityInstance = abilityInstances[abilityIndex].GetComponent<IAbility>();
+            if (abilityInstance == null)
+            {
+                return;
+            }
+            if (abilityInstance.IsPassive())
+            {
+                UseAbility(abilityIndex + 1);
+                return;
+            }
+            abilityInstance?.EffectBeforeExecute()?.ApplyEffect(GetComponent<IEntity>());
+            abilityInstance?.Activate(GetComponent<IEntity>());
+        }
+    }
+
     // 实现接口IEntity
     public void Damaged(int damage)
     {
@@ -160,6 +191,10 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         {
             isTowardsLeft = value;
         }
+        if (status == "isAttacking")
+        {
+            isAttacking = value;
+        }
     }
     public bool GetCertainStatus(string status)
     {
@@ -167,10 +202,26 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
         {
             return isRunning;
         }
+        if (status == "isTowardsLeft")
+        {
+            return isTowardsLeft;
+        }
+        if (status == "isAttacking")
+        {
+            return isAttacking;
+        }
+
         return false;
     }
     public bool IsTowardsLeft()
     {
         return isTowardsLeft;
+    }
+    public void AddAbility(GameObject ability)
+    {
+        abilityInstances ??= new List<GameObject>();
+        var ab = Instantiate(ability, transform);
+        abilityInstances.Add(ab);
+        ab.GetComponent<IAbility>()?.EffectOnAdd()?.ApplyEffect(GetComponent<IEntity>());
     }
 }
