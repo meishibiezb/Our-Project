@@ -125,5 +125,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   abilities:
-  - {fileID: 6569084899564830436, guid: f674dcad7bf876443bfa3dd0698b18ed, type: 3}
+  - {fileID: 873197188064513419, guid: 03053ed3ba9df2b4dac60055cebe8938, type: 3}
   effectAppliedOnAbsorb: []

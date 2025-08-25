@@ -169,7 +169,7 @@ MonoBehaviour:
   triggeringObject: {fileID: 0}
   enablePhysicalEffect: 0
   sizeClamp: {x: 0.8, y: 3}
-  jumpForce: 1000
+  jumpForce: 1200
   moveSpeed: 5
   maxHealth: 100
   divisor: 1200
