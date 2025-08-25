@@ -165,8 +165,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 300
-  moveSpeed: 5
+  moveSpeed: 2
   maxHealth: 100
+  hitCanDamage: 1
+  hitDamage: 10
+  hitForece: {x: 200, y: 150}
   abilities: []
   effectAppliedOnAbsorb: []
 --- !u!114 &150801276641781612

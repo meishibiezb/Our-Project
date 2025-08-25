@@ -234,7 +234,14 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             return;// 贴墙时不进行正常移动
         }
         // 移动（不贴墙）
-        rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+        if (math.abs(rb.velocity.x) < moveSpeed)
+        {
+            rb.velocity = new Vector2(moveDirection.x * moveSpeed + rb.velocity.x, rb.velocity.y);
+        }
+        if (math.abs(moveDirection.x * moveSpeed) < math.abs(rb.velocity.x) && IsGrounded())
+        {
+            //rb.velocity = new Vector2(moveDirection.x * moveSpeed, rb.velocity.y);
+        }
         if (direction < 0)
         {
             isTowardsLeft = true;
