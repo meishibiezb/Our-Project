@@ -11,9 +11,14 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     BoxCollider2D tg;
     bool isTowardsLeft;
     bool isRunning;
+    float hitTimer;
     [SerializeField] float jumpForce = 150f; // 跳跃力度
     [SerializeField] float moveSpeed = 5f; // 移动速度
     [SerializeField] int maxHealth = 100; // 最大生命值
+    [SerializeField] bool hitCanDamage = true;
+    [SerializeField] int hitDamage = 10; // 碰撞伤害
+    [SerializeField] float hitCooldown = 1f; // 碰撞冷却时间
+    [SerializeField] Vector2 hitForece = new Vector2(500f, 300f); // 碰撞时的力
     [SerializeField] GameObject[] abilities; // 技能对象
     [SerializeField] GameObject[] effectAppliedOnAbsorb; // 吸收时应用的效果
 
@@ -37,7 +42,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     // Update is called once per frame
     void Update()
     {
-        
+        hitTimer += Time.deltaTime;
     }
 
     // 碰撞
@@ -50,6 +55,15 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
             {
                 Physics2D.IgnoreCollision(bd, collision.collider);
             }
+        }
+        if (collision.gameObject.CompareTag("Player") && hitCanDamage && hitTimer >= hitCooldown)
+        {
+            var entity = collision.gameObject.GetComponent<IEntity>();
+            entity.Damaged(hitDamage);
+            entity.GetGameObject().GetComponent<Rigidbody2D>().velocity += rb.velocity;
+            entity.GetGameObject().GetComponent<Rigidbody2D>().AddForce(new Vector2(hitForece.x, hitForece.y));
+            //entity.GetGameObject().GetComponent<IPawn>()?.Jump();
+            hitTimer = 0f;
         }
     }
 
@@ -82,7 +96,7 @@ public class Enemy : MonoBehaviour, IPawn, IEntity
     public void Move(float direction)
     {
         direction = Mathf.Clamp(direction, -1f, 1f);
-        Vector2 movement = new Vector2(direction * moveSpeed, 0f);
+        Vector2 movement = new Vector2(direction * moveSpeed, rb.velocity.y);
         if (isRunning)
         {
             movement *= 1.5f;

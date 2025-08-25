@@ -102,10 +102,10 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 2.5
-  m_LinearDrag: 0
+  m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 0d03814847edbd24ebeaff1f6d9a48c6, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -164,9 +164,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1956bb62d01bf3942a06e0f09b36fb5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggeringObject: {fileID: 0}
+  enablePhysicalEffect: 1
+  sizeClamp: {x: 0.8, y: 3}
   jumpForce: 1000
   moveSpeed: 5
   maxHealth: 100
+  divisor: 200
   abilities: []
 --- !u!114 &2235206814555357321
 MonoBehaviour:
