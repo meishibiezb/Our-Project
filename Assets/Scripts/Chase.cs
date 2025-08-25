@@ -5,7 +5,7 @@ using UnityEngine;
 public class Chase : MonoBehaviour, ITask
 {
     [SerializeField] float chasingRadius = 10f;
-    Vector2 bias;
+    [SerializeField] Vector2 bias = new Vector2(0.6f, 0f);
     // Start is called before the first frame update
     void Start()
     {
@@ -28,12 +28,12 @@ public class Chase : MonoBehaviour, ITask
         if (pawn.GetEntity().IsTowardsLeft())
         {
             rayDirection = Vector2.left;
-            bias = new Vector2(-0.6f, 0f);
+            bias = new Vector2(-bias.x, bias.y);
         }
         else
         {
             rayDirection = Vector2.right;
-            bias = new Vector2(0.6f, 0f);
+            bias = new Vector2(bias.x, bias.y);
         }
         Debug.DrawRay(rayOrigin + bias, rayDirection * chasingRadius, Color.red, debugDrawDuration);
         RaycastHit2D hit = Physics2D.Raycast(rayOrigin + bias, rayDirection, chasingRadius);

@@ -6,7 +6,7 @@ public class Patrol : MonoBehaviour, ITask
 {
     Vector2 bias;
     float groundDetectRadius = 1.5f;
-    LayerMask lm;
+    [SerializeField] LayerMask lm;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +15,7 @@ public class Patrol : MonoBehaviour, ITask
 
     void Awake()
     {
-        lm = LayerMask.GetMask("Ground");
+        
     }
 
     // Update is called once per frame
@@ -45,7 +45,7 @@ public class Patrol : MonoBehaviour, ITask
             bias = new Vector2(0.6f, 0f);
         }
         Debug.DrawRay(rayOrigin + bias, rayDirection * groundDetectRadius, Color.blue, debugDrawDuration);
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin + bias, rayDirection, groundDetectRadius, lm);
+        RaycastHit2D hit = Physics2D.Raycast(rayOrigin + bias, rayDirection, groundDetectRadius);
         if (hit.collider != null)
         {
             float direction = pawn.GetEntity().IsTowardsLeft() ? -1f : 1f;
@@ -54,9 +54,10 @@ public class Patrol : MonoBehaviour, ITask
         }
         else
         {
-            //Debug.Log("No ground detected, turn around");
+            Debug.Log("No ground detected, turn around");
+            Debug.Log("Current LayerMask: " + lm.value + " (should include Ground)");
+            Debug.Log($"Ray from {rayOrigin + bias} to down {groundDetectRadius} units, LayerMask: {lm}");
             pawn.Move(0f);
-            //pawn.GetGameObject().GetComponent<SpriteRenderer>().flipX = !pawn.GetGameObject().GetComponent<SpriteRenderer>().flipX;
             pawn.GetEntity().SetCertainStatus("isTowardsLeft", !pawn.GetEntity().IsTowardsLeft());
         }
     }

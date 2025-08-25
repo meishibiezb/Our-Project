@@ -68,7 +68,7 @@ public class PlayerCharacter : MonoBehaviour, IPawn, IEntity
             collision.GetContacts(contacts);
             foreach (var contact in contacts)
             {
-                if (Mathf.Abs(contact.normal.y) < 0.1f)
+                if (Mathf.Abs(contact.normal.y) < 0.4f)
                 {
                     wall = collision.gameObject;
                     break;
